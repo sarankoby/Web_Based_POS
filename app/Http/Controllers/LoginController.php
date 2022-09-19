@@ -66,7 +66,7 @@ class LoginController extends Controller
                 $request->session()->put('Access', $permis);
                 $request->session()->put('Controls',$controls);
 
-                return redirect()->route('sale');
+                return redirect()->route('dashboard');
             } else {
                 //invalid user
                 return view('auth.login')->with('fail', 'Invalid email or password!');

@@ -3,6 +3,15 @@ use App\Http\Controllers\LoginController;
 use App\Http\Livewire\AccessModel;
 use App\Http\Livewire\AccessPoint;
 use App\Http\Livewire\Category;
+use App\Http\Livewire\Brand;
+use App\Http\Livewire\Measurement;
+use App\Http\Livewire\Item;
+use App\Http\Livewire\Company;
+use App\Http\Livewire\Dealer;
+use App\Http\Livewire\InvoiceItem;
+use App\Http\Livewire\PurchaseInvoice;
+use App\Http\Livewire\StockTransfer;
+
 use App\Http\Livewire\Permission;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users;
@@ -37,6 +46,15 @@ Route::get('/permission/{id}', Permission::class)->name('permission');
 Route::get('/users', Users::class)->name('users');
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
 Route::get('/category', Category::class)->name('category');
+Route::get('/brand', Brand::class)->name('brand');
+Route::get('/measurement', Measurement::class)->name('measurement');
+Route::get('/item', Item::class)->name('item');
+Route::get('/company',Company::class)->name('company');
+Route::get('/dealer', Dealer::class)->name('dealer');
+Route::get('/purchase-invoice', PurchaseInvoice::class)->name('purchase-invoice');
+Route::get('/stock-transfer',StockTransfer::class)->name('stock-transfer');
+
+
 
 
 

@@ -2,7 +2,7 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-orange text-white-all">
+        <ol class="breadcrumb bg-primary text-white-all">
             {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
             <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Auth</a></li>
@@ -157,7 +157,7 @@
                     </div>
                     <div class="modal-body">
                         <p class="text-center">
-                            If you want to remove this data, <b>you can't undone</b>, It will be affected that relevent
+                            If you want to remove this data, <b>you can't undo</b>, It will be affected that relevent
                             records!
                         </p>
 

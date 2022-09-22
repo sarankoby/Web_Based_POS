@@ -154,7 +154,7 @@
                 </div>
                 <div class="modal-body">
                     <p class="text-center">
-                        If you want to remove this data, <b>you can't undone</b>, It will be affected that relevent
+                        If you want to remove this data, <b>you can't undo</b>, It will be affected that relevent
                         records!
                     </p>
 

@@ -1,23 +1,18 @@
-@push('category', 'active')
+@push('company', 'active')
+
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-primary text-white-all">
-            {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
+        <ol class="breadcrumb bg-info text-white-all">
             <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Create New</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Category</li>
+            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Purchase</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Company</li>
         </ol>
     </nav>
 
     <div class="row">
-
         <div class="col-12 col-md-4">
-
         </div>
-
         <div class="col-12 col-md-8">
-
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" wire:model="searchKey" wire:keyup="fetchData"
@@ -31,38 +26,39 @@
                                 aria-hidden="true"></i> Create-New
                         </button>
                     @endif
-
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
 
 
     <div class="row">
-
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="p-4">
-                    <h4>Categories</h4>
-
+                    <h4>Companies</h4>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="tableExport">
                             <tr>
-                                <th>No</th>
-                                <th>Category</th>
-                                <th>Actions</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Description</th>
+                                <th>Action</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
                                 <tr>
                                     <td>{{ $x }}</td>
-                                    <td>{{ $row->category }}</td>
+                                    <td>{{ $row->company_name }}</td>
+                                    <td>{{ $row->tp }}</td>
+                                    <td>{{ $row->email }}</td>
+                                    <td>{{ $row->description }}</td>
 
                                     <td>
                                         @if (in_array('Delete', $page_action))
@@ -78,19 +74,13 @@
                                                     aria-hidden="true"></i>
                                             </a>
                                         @endif
-
-
-
                                     </td>
                                 </tr>
                                 @php($x++)
                             @endforeach
-
                         </table>
                     </div>
-
                 </div>
-
             </div>
         </div>
 
@@ -109,14 +99,35 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" wire:model="new_category"
-                                placeholder="Category">
-                            @error('new_category')
+                            <label>Company Name</label>
+                            <input type="text" class="form-control" wire:model="new_name">
+                            @error('new_name')
                                 <span class="text-danger text-sm">{{ $message }}</span>
                             @enderror
-
                         </div>
+
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" class="form-control" wire:model="new_contact">
+                            @error('new_contact')
+                                <span class="text-danger text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" wire:model="new_email">
+                            @error('new_email')
+                                <span class="text-danger text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea type="text" class="form-control" wire:model="new_description">
+                          </textarea>
+                        </div>
+
 
                         @if (session()->has('message'))
                             <div class="alert alert-success">
@@ -130,7 +141,6 @@
                             <button type="button" wire:click="saveData"
                                 class="btn btn-primary m-t-15 waves-effect">Save</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -162,12 +172,10 @@
                             <button type="button" wire:click="deleteRecord"
                                 class="btn btn-danger m-t-15 waves-effect">Yes</button>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
         {{-- model end --}}
-
     </div>
 </div>

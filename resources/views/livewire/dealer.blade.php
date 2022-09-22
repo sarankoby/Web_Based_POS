@@ -1,23 +1,17 @@
-@push('category', 'active')
+@push('dealer', 'active')
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-primary text-white-all">
-            {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
+        <ol class="breadcrumb bg-info text-white-all">
             <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Create New</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Category</li>
+            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i>Purchase</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Dealer</li>
         </ol>
     </nav>
 
     <div class="row">
-
         <div class="col-12 col-md-4">
-
         </div>
-
         <div class="col-12 col-md-8">
-
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" wire:model="searchKey" wire:keyup="fetchData"
@@ -31,38 +25,39 @@
                                 aria-hidden="true"></i> Create-New
                         </button>
                     @endif
-
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
 
 
     <div class="row">
-
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="p-4">
-                    <h4>Categories</h4>
-
+                    <h4>Dealers</h4>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="tableExport">
                             <tr>
-                                <th>No</th>
-                                <th>Category</th>
-                                <th>Actions</th>
+                                <th>#</th>
+                                <th>Company</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Action</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
                                 <tr>
                                     <td>{{ $x }}</td>
-                                    <td>{{ $row->category }}</td>
+                                    <td>{{ $row->company_name }}</td>
+                                    <td>{{ $row->name }}</td>
+                                    <td>{{ $row->tp }}</td>
+                                    <td>{{ $row->email }}</td>
 
                                     <td>
                                         @if (in_array('Delete', $page_action))
@@ -78,27 +73,21 @@
                                                     aria-hidden="true"></i>
                                             </a>
                                         @endif
-
-
-
                                     </td>
                                 </tr>
                                 @php($x++)
                             @endforeach
-
                         </table>
                     </div>
-
                 </div>
-
             </div>
         </div>
 
 
         {{-- Insert model here --}}
-        <div wire:ignore.self class="modal fade" id="insert-model" tabindex="-1" role="dialog"
+        <div wire:ignore.self class="modal fade bd-example-modal-lg" id="insert-model" tabindex="-1" role="dialog"
             aria-labelledby="formModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="formModal">Create Data</h5>
@@ -108,13 +97,59 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" wire:model="new_category"
-                                placeholder="Category">
-                            @error('new_category')
-                                <span class="text-danger text-sm">{{ $message }}</span>
-                            @enderror
+                        <div class="row ">
+                            {{-- company --}}
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group" wire:model="new_company">
+                                    <label>Select Company</label>
+                                    <select class="form-control">
+                                        <option value="0">-- Select Company-- </option>
+                                        @foreach ($companies as $company)
+                                            @if ($new_company == $company->id)
+                                                <option value="{{ $company->id }}" selected>
+                                                    {{ $company->company_name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $company->id }}">{{ $company->company_name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    @error('new_company')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- name --}}
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" wire:model="new_name">
+                                    @error('new_name')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- contact --}}
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Contact </label>
+                                    <input type="text" class="form-control" wire:model="new_contact">
+                                    @error('new_contact')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- Email --}}
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" wire:model="new_email">
+                                </div>
+                            </div>
 
                         </div>
 
@@ -130,7 +165,6 @@
                             <button type="button" wire:click="saveData"
                                 class="btn btn-primary m-t-15 waves-effect">Save</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -168,6 +202,5 @@
             </div>
         </div>
         {{-- model end --}}
-
     </div>
 </div>

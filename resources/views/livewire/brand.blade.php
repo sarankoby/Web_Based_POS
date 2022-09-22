@@ -1,21 +1,16 @@
-@push('category', 'active')
+@push('brand', 'active')
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-primary text-white-all">
-            {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
             <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Create New</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Category</li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Brand</li>
         </ol>
     </nav>
 
     <div class="row">
-
         <div class="col-12 col-md-4">
-
         </div>
-
         <div class="col-12 col-md-8">
 
             <div class="form-group">
@@ -35,34 +30,30 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
 
 
     <div class="row">
-
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="p-4">
-                    <h4>Categories</h4>
-
+                    <h4>Brands</h4>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="tableExport">
                             <tr>
                                 <th>No</th>
-                                <th>Category</th>
+                                <th>Brand</th>
                                 <th>Actions</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
                                 <tr>
                                     <td>{{ $x }}</td>
-                                    <td>{{ $row->category }}</td>
+                                    <td>{{ $row->brand }}</td>
 
                                     <td>
                                         @if (in_array('Delete', $page_action))
@@ -78,9 +69,6 @@
                                                     aria-hidden="true"></i>
                                             </a>
                                         @endif
-
-
-
                                     </td>
                                 </tr>
                                 @php($x++)
@@ -88,9 +76,7 @@
 
                         </table>
                     </div>
-
                 </div>
-
             </div>
         </div>
 
@@ -109,10 +95,10 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" wire:model="new_category"
-                                placeholder="Category">
-                            @error('new_category')
+                            <label>Brand</label>
+                            <input type="text" class="form-control" wire:model="new_brand"
+                                placeholder="Brand">
+                            @error('new_brand')
                                 <span class="text-danger text-sm">{{ $message }}</span>
                             @enderror
 
@@ -168,6 +154,5 @@
             </div>
         </div>
         {{-- model end --}}
-
     </div>
 </div>

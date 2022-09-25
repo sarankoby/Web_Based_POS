@@ -11,12 +11,14 @@ use App\Http\Livewire\Dealer;
 use App\Http\Livewire\InvoiceItem;
 use App\Http\Livewire\PurchaseInvoice;
 use App\Http\Livewire\StockTransfer;
-
+use App\Http\Livewire\Customer;
+use App\Http\Livewire\Sale;
+use App\Http\Livewire\Shop;
+use App\Http\Livewire\PrintBarcode;
 use App\Http\Livewire\Permission;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\UserType;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,9 +55,11 @@ Route::get('/company',Company::class)->name('company');
 Route::get('/dealer', Dealer::class)->name('dealer');
 Route::get('/purchase-invoice', PurchaseInvoice::class)->name('purchase-invoice');
 Route::get('/stock-transfer',StockTransfer::class)->name('stock-transfer');
-
-
-
+Route::get('/customer',Customer::class)->name('customer');
+Route::get('/shop',Shop::class)->name('shop');
+Route::get('/sale',Sale::class)->name('sale');
+Route::get('/invoice-items/{id}',InvoiceItem::class)->name('invoice-items');
+Route::get('/print-barcode/{id}',PrintBarcode::class)->name('print-barcode');
 
 
 });

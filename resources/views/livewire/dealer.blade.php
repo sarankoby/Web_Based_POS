@@ -1,8 +1,8 @@
 @push('dealer', 'active')
 <div>
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-info text-white-all">
-            <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+        <ol class="breadcrumb bg-primary text-white-all">
+            <li class="breadcrumb-item"><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i>Purchase</a></li>
             <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Dealer</li>
         </ol>
@@ -21,7 +21,7 @@
                     </div>
 
                     @if (in_array('Save', $page_action))
-                        <button id="formOpen" wire:click="openModel" class="btn btn-info ml-1"><i class="fa fa-plus"
+                        <button id="formOpen" wire:click="openModel" class="btn btn-success ml-1"><i class="fa fa-plus"
                                 aria-hidden="true"></i> Create-New
                         </button>
                     @endif
@@ -163,7 +163,7 @@
                             <button type="button" wire:click="closeModel"
                                 class="btn btn-danger m-t-15 waves-effect">Close </button>
                             <button type="button" wire:click="saveData"
-                                class="btn btn-primary m-t-15 waves-effect">Save</button>
+                                class="btn btn-success m-t-15 waves-effect">Save</button>
                         </div>
                     </div>
                 </div>

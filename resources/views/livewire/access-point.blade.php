@@ -1,9 +1,9 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-info text-white-all">
+        <ol class="breadcrumb bg-primary text-white-all">
             {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
-            <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Auth</a></li>
             <li class="breadcrumb-item"><a href="/access-model"><i class="fas fa-list"></i>Access-Model</a></li>
             <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Access-points</li>
@@ -12,13 +12,9 @@
 
 
     <div class="row">
-
         <div class="col-12 col-md-4">
-
         </div>
-
         <div class="col-12 col-md-8">
-
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" wire:model="searchKey" wire:keyup="fetchData"
@@ -27,15 +23,13 @@
                         <button class="btn btn-primary" wire:click="fetchData">Search</button>
                     </div>
                     @if (in_array('Save', $page_action))
-                        <button id="formOpen" wire:click="openModel" class="btn btn-info ml-1"><i class="fa fa-plus"
+                        <button id="formOpen" wire:click="openModel" class="btn btn-success ml-1"><i class="fa fa-plus"
                                 aria-hidden="true"></i> Create New
                         </button>
                     @endif
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
@@ -85,9 +79,7 @@
 
                         </table>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -130,7 +122,7 @@
                         <button type="button" wire:click="closeModel" class="btn btn-danger m-t-15 waves-effect">Close
                         </button>
                         <button type="button" wire:click="saveData"
-                            class="btn btn-primary m-t-15 waves-effect">Save</button>
+                            class="btn btn-success m-t-15 waves-effect">Save</button>
                     </div>
 
                 </div>

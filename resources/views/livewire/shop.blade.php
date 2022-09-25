@@ -1,12 +1,10 @@
-@push('category', 'active')
+@push('shop', 'active')
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-primary text-white-all">
-            {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
-            <li class="breadcrumb-item"><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Create New</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Category</li>
+        <ol class="breadcrumb bg-info text-white-all">
+            <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Customers</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Shop</li>
         </ol>
     </nav>
 
@@ -31,7 +29,6 @@
                                 aria-hidden="true"></i> Create-New
                         </button>
                     @endif
-
                 </div>
             </div>
         </div>
@@ -44,23 +41,27 @@
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="p-4">
-                    <h4>Categories</h4>
-
+                    <h4>Shops</h4>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="tableExport">
                             <tr>
-                                <th>No</th>
-                                <th>Category</th>
-                                <th>Actions</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Barcode</th>
+                                <th>Credit</th>
+                                <th>Action</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
                                 <tr>
                                     <td>{{ $x }}</td>
-                                    <td>{{ $row->category }}</td>
-
+                                    <td>{{ $row->shop_name }}</td>
+                                    <td>{{ $row->tp }}</td>
+                                    <td>{{ $row->code }}</td>
+                                    <td>{{ $row->cridit }}</td>
                                     <td>
                                         @if (in_array('Delete', $page_action))
                                             <a href="#" class="text-danger m-2"
@@ -100,13 +101,19 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" wire:model="new_category"
-                                placeholder="Category">
-                            @error('new_category')
+                            <label>Shop Name</label>
+                            <input type="text" class="form-control" wire:model="new_name">
+                            @error('new_name')
                                 <span class="text-danger text-sm">{{ $message }}</span>
                             @enderror
+                        </div>
 
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" class="form-control" wire:model="new_contact">
+                            @error('new_contact')
+                                <span class="text-danger text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         @if (session()->has('message'))
@@ -121,7 +128,6 @@
                             <button type="button" wire:click="saveData"
                                 class="btn btn-success m-t-15 waves-effect">Save</button>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -4,20 +4,16 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-primary text-white-all">
             {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
-            <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Auth</a></li>
             <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Access-Model</li>
         </ol>
     </nav>
 
     <div class="row">
-
         <div class="col-12 col-md-4">
-
         </div>
-
         <div class="col-12 col-md-8">
-
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" wire:model="searchKey" wire:keyup="fetchData"
@@ -27,7 +23,7 @@
                     </div>
 
                     @if (in_array('Save', $page_action))
-                        <button id="formOpen" wire:click="openModel" class="btn btn-info ml-1"><i class="fa fa-plus"
+                        <button id="formOpen" wire:click="openModel" class="btn btn-success ml-1"><i class="fa fa-plus"
                                 aria-hidden="true"></i> Create-New
                         </button>
                     @endif
@@ -35,8 +31,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
@@ -48,7 +42,6 @@
             <div class="card">
                 <div class="p-4">
                     <h4>Access-Models</h4>
-
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -90,12 +83,9 @@
                                 </tr>
                                 @php($x++)
                             @endforeach
-
                         </table>
                     </div>
-
                 </div>
-
             </div>
         </div>
 
@@ -133,7 +123,7 @@
                             <button type="button" wire:click="closeModel"
                                 class="btn btn-danger m-t-15 waves-effect">Close </button>
                             <button type="button" wire:click="saveData"
-                                class="btn btn-primary m-t-15 waves-effect">Save</button>
+                                class="btn btn-success m-t-15 waves-effect">Save</button>
                         </div>
 
                     </div>
@@ -173,7 +163,6 @@
             </div>
         </div>
         {{-- model end --}}
-
     </div>
 
 

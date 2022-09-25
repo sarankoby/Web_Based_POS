@@ -1,12 +1,10 @@
-@push('category', 'active')
+@push('customer', 'active')
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-primary text-white-all">
-            {{-- <li class="breadcrumb-item active"><a href="/elders-view"><i class="fa fa-arrow-left"></i> </a></li> --}}
-            <li class="breadcrumb-item"><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Create New</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Category</li>
+            <li class="breadcrumb-item"><a href="/#"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Customers</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Customer</li>
         </ol>
     </nav>
 
@@ -35,31 +33,42 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
 
 
 
     <div class="row">
+
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="p-4">
-                    <h4>Categories</h4>
+                    <h4>Customers</h4>
 
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="tableExport">
                             <tr>
-                                <th>No</th>
-                                <th>Category</th>
-                                <th>Actions</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Barcode</th>
+                                <th>Loyality</th>
+                                <th>Credit</th>
+                                <th>Action</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
                                 <tr>
                                     <td>{{ $x }}</td>
-                                    <td>{{ $row->category }}</td>
+                                    <td>{{ $row->customer_name }}</td>
+                                    <td>{{ $row->tp }}</td>
+                                    <td>{{ $row->code }}</td>
+                                    <td>{{ $row->loyality }}</td>
+                                    <td>{{ $row->cridit }}</td>
 
                                     <td>
                                         @if (in_array('Delete', $page_action))
@@ -75,6 +84,9 @@
                                                     aria-hidden="true"></i>
                                             </a>
                                         @endif
+
+
+
                                     </td>
                                 </tr>
                                 @php($x++)
@@ -100,14 +112,23 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" wire:model="new_category"
-                                placeholder="Category">
-                            @error('new_category')
+                            <label>Customer Name</label>
+                            <input type="text" class="form-control" wire:model="new_name">
+                            @error('new_name')
                                 <span class="text-danger text-sm">{{ $message }}</span>
                             @enderror
-
                         </div>
+
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" pattern="^\d{2}\d{3}\d{4}$" placeholder="771234567" class="form-control" wire:model="new_contact">
+                            @error('new_contact')
+                                <span class="text-danger text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+
 
                         @if (session()->has('message'))
                             <div class="alert alert-success">
@@ -159,5 +180,6 @@
             </div>
         </div>
         {{-- model end --}}
+
     </div>
 </div>

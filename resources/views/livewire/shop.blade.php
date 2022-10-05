@@ -1,7 +1,7 @@
 @push('shop', 'active')
 <div>
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-info text-white-all">
+        <ol class="breadcrumb bg-primary text-white-all">
             <li class="breadcrumb-item"><a href="/home"><i class="fas fa-tachometer-alt"></i> Home</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Customers</a></li>
             <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i>Shop</li>
@@ -93,7 +93,9 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="formModal">Create Data</h5>
+                        <h5 class="modal-title" id="formModal">
+                            {{ ($key==0)?"Create Data":"Update Data";}}
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

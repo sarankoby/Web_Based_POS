@@ -191,7 +191,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td style="background-color: rgb(0, 128, 255);"><b>QTY-MAIN:
+                                    <td style="background-color: rgb(3, 123, 244);"><b>QTY-MAIN:
                                             {{ $list_data[0]->quantity }}</b></td>
                                     <td style="background-color: rgb(0, 255, 183);">
                                         @if (sizeOf($branch_data) != 0)
@@ -267,7 +267,7 @@
                     @if (sizeOf($bill_item) != 0)
                         <div class="text-right">
                             @if ($customer_data)
-                                <h4 style="background-color: rgba(65, 106, 232, 0.836); color:white;" class="p-1">
+                                <h4 style="background-color: rgba(12, 69, 239, 0.836); color:white;" class="p-1">
                                     Name:- {{ $customer_data->customer_name }} Tp:- {{ $customer_data->tp }} Credit:-
                                     {{ $customer_data->cridit }} Loyality:- {{ $customer_data->loyality }}
                                 </h4>
@@ -290,7 +290,7 @@
                 <div class="card-body p-2">
                     @if (sizeOf($bill_item) != 0)
 
-                        <h3 align="right" class="p-2" style="background-color: rgba(8, 234, 65, 0.716);">Sub
+                        <h3 align="right" class="p-2" style="background-color: rgba(6, 248, 66, 0.716);">Sub
                             Total=
                             {{ 'Rs.' . number_format($item_total, 2) }}</h3>
 
@@ -329,12 +329,7 @@
                                 @endforeach
                             </table>
                         </div>
-                        <div class="text-right">
-                            <button type="button" wire:click="closeModel"
-                                class="btn btn-danger m-t-15 waves-effect">Clear </button>
-                            <button type="button" wire:click="textPrint"
-                                class="btn btn-primary m-t-15 waves-effect">Back to Main</button>
-                        </div>
+        
                     @else
                         <h4 align="center" class="text-danger">Item not in Store</h4>
 

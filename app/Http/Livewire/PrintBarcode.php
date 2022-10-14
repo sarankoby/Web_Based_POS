@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Http\Livewire;
-
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-
 class PrintBarcode extends Component
 {
-
     public $item_id;
     public $items=[];
     public function mount($id)
@@ -22,7 +18,6 @@ class PrintBarcode extends Component
         ->join('measurements', 'measurements.id', '=', 'items.measurement_id')
         ->where('invoice_items.id','=',$id)
         ->get();
-
 
     }
 

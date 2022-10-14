@@ -28,9 +28,7 @@ class LoginController extends Controller
             "email" => "required|email",
             "password" => "required|min:5|max:12"
         ]);
-
         //  $user=DB::table('users')->select('users.*')->where('email', '=', $request->input('email'))->first();
-
         $user = UserModel::where('email', '=', $request->input('email'))->first();
         // return $user;
         // if user

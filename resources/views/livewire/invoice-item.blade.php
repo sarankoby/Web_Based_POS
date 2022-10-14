@@ -193,7 +193,7 @@
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" class="form-control" wire:model="new_quantity">
+                                    <input type="number"  min="0" class="form-control" wire:model="new_quantity">
                                     @error('new_quantity')
                                         <span class="text-danger text-sm">{{ $message }}</span>
                                     @enderror
@@ -203,8 +203,8 @@
                             {{-- buy price --}}
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Buy price</label>
-                                    <input type="number" class="form-control" wire:model="new_buy">
+                                    <label>Buying Price</label>
+                                    <input type="number"  min="0" class="form-control" wire:model="new_buy">
 
                                     @error('new_buy')
                                         <span class="text-danger text-sm">{{ $message }}</span>
@@ -215,8 +215,8 @@
                             {{-- sell price --}}
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Sell Price</label>
-                                    <input type="number" class="form-control" required="" wire:model="new_sell">
+                                    <label>Selling Price</label>
+                                    <input type="number"  min="0" class="form-control" required="" wire:model="new_sell">
                                     @error('new_sell')
                                         <span class="text-danger text-sm">{{ $message }}</span>
                                     @enderror
@@ -227,8 +227,8 @@
                             {{-- min sell price --}}
                             <div class="col-12 col-md-4 col-lg-4 ">
                                 <div class="form-group">
-                                    <label>Min Sell price</label>
-                                    <input type="number" class="form-control" required=""
+                                    <label>Min Selling Price</label>
+                                    <input type="number" min="0" class="form-control" required=""
                                         wire:model="new_min_sell">
 
                                     @error('new_min_sell')

@@ -35,7 +35,7 @@ class Dashboard extends Component
         $this->customers = DB::table('customers')->count();
         $this->purchase_invoices = DB::table('purchase_invoices')->sum('amount');
         $this->branch_stores = DB::table('branch_stores')->count();
-        $this->expenses = DB::table('expences')->sum('amount');
+        $this->expenses = DB::table('final_bills')->sum('invoice_amount');
         $this->dealers = DB::table('dealers')->count();
         $this->shops = DB::table('shops')->count();
 

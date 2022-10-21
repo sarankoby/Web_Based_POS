@@ -1,4 +1,4 @@
-@push('invoice', 'active')
+@push('purchase', 'active')
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-primary text-white-all">
@@ -83,7 +83,7 @@
                                         {{ $row->expiry }}
                                         <br>
                                         @if (now() < $row->expiry)
-                                            <small class="text-success text-lg"><b>Item expire within
+                                            <small class="text-danger text-lg"><b>Item expires
                                                     {{ \Carbon\Carbon::parse($row->expiry)->diffForHumans() }}</b></small>
                                         @else
                                             <small class="text-danger"><b>Item expired

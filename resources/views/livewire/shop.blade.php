@@ -50,9 +50,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Contact</th>
-                                <th>Barcode</th>
-                                <th>Credit</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                             @php($x = 1)
                             @foreach ($list_data as $row)
@@ -60,8 +58,6 @@
                                     <td>{{ $x }}</td>
                                     <td>{{ $row->shop_name }}</td>
                                     <td>{{ $row->tp }}</td>
-                                    <td>{{ $row->code }}</td>
-                                    <td>{{ $row->cridit }}</td>
                                     <td>
                                         @if (in_array('Delete', $page_action))
                                             <a href="#" class="text-danger m-2"

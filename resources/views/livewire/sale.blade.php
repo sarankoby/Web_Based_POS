@@ -7,7 +7,7 @@
         <div class="col-12 col-md-8">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" id="search_bar" class="form-control" autofocus wire:click="searchClear"
+                    <input type="text" id="search_bar" class="form-control" placeholder="Enter Barcode / Scan Barcode" autofocus wire:click="searchClear"
                         wire:model="searchKey" wire:keyup="fetchData" placeholder="" aria-label="">
                     <div class="input-group-append">
                         <button class="btn btn-primary" wire:click="fetchData">Search</button>
@@ -24,7 +24,9 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="formModal">Customer Information</h5>
+                    <h4 class="modal-title" id="formModal"><b>Total Bill Amount
+                            {{ 'Rs.' . number_format($item_total, 2) }} </b></h4>
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -65,6 +67,188 @@
                             </div>
                         </div>
                     </div>
+                     {{-- billing area start here --}}
+
+                     <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <div class="form-group" wire:model="payment_option">
+                                        <label>Payment Options</label>
+                                        <select class="form-control" wire:change="selectedCustomer">
+                                            <option value="Cash" {{ $payment_option == 'Cash' ? 'selected' : '' }}>
+                                                Cash Payment
+                                            </option>
+                                            <option value="Card" {{ $payment_option == 'Card' ? 'selected' : '' }}>
+                                                Card Payment
+                                            </option>
+                                            @if ($new_customer_id)
+                                                <option value="Credit"
+                                                    {{ $payment_option == 'Credit' ? 'selected' : '' }}>Credit Payment
+                                                </option>
+                                                <option value="Loyality"
+                                                    {{ $payment_option == 'Loyality' ? 'selected' : '' }}>Loyality
+                                                    Points
+                                                </option>
+                                            @endif
+                                        </select>
+                                        @error('payment_option')
+                                            <span class="text-danger text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- cash start --}}
+
+                            @if ($payment_option == 'Cash')
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label>Paid Amount</label>
+                                            <input type="number" class="form-control" wire:keyUp="findBalance" wire:model="paid_amount" required>
+                                            @error('paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label>Balance</label>
+                                            <input type="number" disabled class="form-control"
+                                                wire:model="balance_amount">
+                                            @error('balance_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- cash end --}}
+                            @endif
+                            @if ($payment_option == 'Card')
+                                {{-- card start --}}
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-4">
+                                        <div class="form-group">
+                                            <label>Cash Paid Amount</label>
+                                            <input type="number" class="form-control" wire:keyUp="cardPaymentAction" wire:keyDwon="cardPaymentAction" wire:model="paid_amount">
+                                            @error('paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-4">
+                                        <div class="form-group">
+                                            <label>Card Paid Amount</label>
+                                            <input type="number" class="form-control" wire:click="cardPaymentAction" disabled wire:model="card_paid_amount">
+                                            @error('card_paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-4">
+                                        <div class="form-group">
+                                            <label>Card Reference Number</label>
+                                            <input type="number" class="form-control" wire:model="card_ref_number">
+                                            @error('card_ref_number')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- card end --}}
+                            @endif
+                            @if ($payment_option == 'Loyality')
+                                {{-- Loyality start --}}
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-3">
+                                        <div class="form-group">
+                                            <label>Cash Paid Amount</label>
+                                            <input type="number" class="form-control" wire:model="paid_amount">
+                                            @error('paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-3">
+                                        <div class="form-group">
+                                            <label>Card Paid Amount</label>
+                                            <input type="number" class="form-control" wire:model="card_paid_amount">
+                                            @error('card_paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-3">
+                                        <div class="form-group">
+                                            <label>Loyality Points</label>
+                                            <input type="number" class="form-control" wire:model="loyality_amount">
+                                            @error('loyality_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-3">
+                                        <div class="form-group">
+                                            <label>Card Reference Number</label>
+                                            <input type="number" class="form-control" wire:model="card_ref_number">
+                                            @error('card_ref_number')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- card end --}}
+                            @endif
+                            @if ($payment_option == 'Credit')
+                                {{-- Credit start --}}
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label>Cash Paid Amount</label>
+                                            <input type="number" class="form-control" wire:keyUp="creditAction" wire:keyDwon="creditAction" wire:model="paid_amount">
+                                            @error('paid_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label>Credit Amount</label>
+                                            <input type="number" class="form-control" disabled wire:model="credit_amount">
+                                            @error('credit_amount')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- card end --}}
+                            @endif
+
+                            <div class="text-right">
+                                <button type="button" wire:click="closeModel"
+                                    class="btn btn-danger m-t-15 waves-effect">Close
+                                </button>
+                                <button type="button" wire:click="doBill('1')"
+                                    class="btn btn-info m-t-15 waves-effect">With Bill
+                                </button>
+
+                                <button type="button" wire:click="doBill('0')"
+                                    class="btn btn-success m-t-15 waves-effect">Without Bill
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- billing area end here --}}
+
 
                     @if ($customer_data)
                         <div class="table-responsive">
@@ -88,6 +272,9 @@
                             </table>
                         </div>
                     @endif
+
+
+
                     <div id="accordion">
                         <div class="accordion">
                             <div class="accordion-header" role="button" data-toggle="collapse"
@@ -136,17 +323,16 @@
                     </div>
 
 
-                    <div class="text-right">
-                        <button type="button" wire:click="closeModel" class="btn btn-danger m-t-15 waves-effect">Close
-                        </button>
-                        <button type="button" wire:click="closeModel"
-                            class="btn btn-success m-t-15 waves-effect">Ok</button>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
     {{-- model end --}}
+
+
+
+
 
     <div class="row">
         <div class="col-6 col-md-6 col-lg-6">
@@ -274,14 +460,14 @@
                             @endif
                             <button type="button" wire:click="openModel"
                                 class="btn btn-warning btn-lg m-t-15 waves-effect p-2">
-                                <h4>Customer</h4>
+                                <b>Complete Order/Pay</b>
 
                             </button>
 
-                            <button type="button" wire:click="addToTemBIll"
-                                class="btn btn-info btn-lg m-t-15 waves-effect p-2">
-                                <h4>Complete Order/Pay</h4>
-                            </button>
+                            {{-- <button type="button" wire:click="textPrint"
+                                class="btn btn-info btn-lg m-t-15 waves-effect p-2 ">
+                                <b>Complete Order/Pay</b>
+                            </button> --}}
 
                         </div>
                     @endif
@@ -290,9 +476,9 @@
                 <div class="card-body p-2">
                     @if (sizeOf($bill_item) != 0)
 
-                        <h3 align="right" class="p-2" style="background-color: rgba(6, 248, 66, 0.716);">Sub
+                        <h5 align="right" class="p-2" style="background-color: rgba(6, 248, 66, 0.716);">Sub
                             Total=
-                            {{ 'Rs.' . number_format($item_total, 2) }}</h3>
+                            {{ 'Rs.' . number_format($item_total, 2) }}</h5>
 
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
@@ -329,7 +515,6 @@
                                 @endforeach
                             </table>
                         </div>
-        
                     @else
                         <h4 align="center" class="text-danger">Item not in Store</h4>
 
@@ -341,29 +526,44 @@
 
         {{-- print recepit --}}
         <div id="printDocument" class="d-none">
-            <h1 align="center">Testing</h1>
-            <table style=" border:solid rgba(0, 0, 0, 0.658); border-width:1px 0px 0px 1px; width:99%" >
-                <tr style="border:solid rgba(0, 0, 0, 0.658);
-                border-width:10px 1px 1px 0;">
-                    <th>#</th>
-                    <th>Details</th>
-                    <th>QTY</th>
-                    <th>U.P</th>
-                    <th>Total</th>
+            <h1 align="center">Invoice Number: {{ $invoice_number}}</h1>
+            <table style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse; width:99%;">
+                <tr>
+                    <th style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;">#</th>
+                    <th style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;">Details</th>
+                    <th style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;"> QTY</th>
+                    <th style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;">U.P</th>
+                    <th style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;">Total</th>
 
                 </tr>
                 @php($x = 1)
-                @foreach ($bill_item as $row)
+
+                @foreach ($print_bill_information as $row)
                     <tr>
-                        <td>{{ $x }}</td>
-                        <td><b>{{ $row->category_name }}</b>-<b>{{ $row->brand_name }}</b><br>
-                            {{ $row->item_name . '-' . $row->measure . $row->measurement_name }}
-                            <br>
+                        <td
+                            style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;  text-align: center;">
+                            {{ $x }}</td>
+                        <td
+                            style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;  text-align: center;">
+                            <small>
+                                <b>{{ $row->category_name }}</b>-<b>{{ $row->brand_name }}</b><br>
+                                {{ $row->item_name . '-' . $row->measure . $row->measurement_name }}
+                                <br>
+                            </small>
 
                         </td>
-                        <td>{{ $row->quantity }}</td>
-                        <td>{{ $row->amount }}</td>
-                        <td>{{ $row->quantity * $row->amount }}</td>
+                        <td
+                            style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;  text-align: center;">
+                            <small>{{ $row->quantity }}</small>
+                        </td>
+                        <td
+                            style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;  text-align: center;">
+                            <small>{{ $row->amount }}</small>
+                        </td>
+                        <td
+                            style="border:1px solid rgba(0, 0, 0, 0.658);  border-collapse: collapse;  text-align: center;">
+                            <small>{{ $row->quantity * $row->amount }}</small>
+                        </td>
 
                     </tr>
                     @php($x++)

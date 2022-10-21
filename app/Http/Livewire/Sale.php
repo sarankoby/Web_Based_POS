@@ -1,5 +1,9 @@
 <?php
+
 namespace App\Http\Livewire;
+
+use App\Models\FinalBill as FinalBillModel;
+use App\Models\FinalBillItem as FinalBillItemModel;
 use App\Models\BranchStore as BranchStoreModel;
 use App\Models\InvoiceItem as InvoiceItemModel;
 use App\Models\TemOrder as TemOrderModel;
@@ -7,6 +11,7 @@ use App\Models\Customer as CustomerModel;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Route;
 
 // require __DIR__ . 'vendor/autoload.php';
@@ -53,22 +58,158 @@ class Sale extends Component
     public $new_name = "";
     public $new_contact;
 
+    //billing options
+    public $payment_option;
+    public $paid_amount;
+    public $card_paid_amount;
+    public $credit_amount;
+    public $card_ref_number;
+    public $loyality_amount;
+    public $balance_amount;
+
+    //billing
+    public $invoice_number;
+    public $invoice_date;
+    public $new_discount = 0;
+
+    public $print_bill;
+    public $print_bill_information = [];
+
+
+
+    public function printDataFetch()
+    {
+        # code...
+        $this->print_bill = FinalBillModel::where('invoice_number', $this->invoice_number)->first();
+        $this->print_bill_information = DB::table('final_bill_items')
+            ->select('final_bill_items.*', 'items.item_name', 'items.measure', 'categories.category as category_name', 'brands.brand as brand_name', 'measurements.measurement as measurement_name')
+            ->join('invoice_items', 'final_bill_items.invoice_items_id', '=', 'invoice_items.id')
+            ->join('items', 'items.id', '=', 'invoice_items.item_id')
+            ->join('categories', 'categories.id', '=', 'items.category_id')
+            ->join('brands', 'brands.id', '=', 'items.brand_id')
+            ->join('measurements', 'measurements.id', '=', 'items.measurement_id')
+            ->where('final_bill_items.bill_id', '=', $this->print_bill->id)
+            ->get();
+    }
+
+    public function doBill($x)
+    {
+
+        // return dd($x);
+        # generate invoice number as well.
+        $data = FinalBillModel::latest()->get();
+        // return dd($data);
+        if (sizeof($data) != 0) {
+            $this->invoice_number = $data[0]->invoice_number + 1;
+        } else {
+            $this->invoice_number = 1;
+        }
+        $this->invoice_date = today();
+
+
+
+        $biller = new FinalBillModel();
+        $biller->invoice_number = $this->invoice_number;
+        $biller->invoice_amount = $this->item_total;
+        $biller->invoice_date = $this->invoice_date;
+        #if customer bill
+        if ($this->new_customer_id) {
+            $biller->customer_id = $this->new_customer_id;
+        }
+
+        #payment options
+        $biller->cash_paid_amount = ($this->paid_amount) ? $this->paid_amount : 0;
+        $biller->card_paid_amount = ($this->card_paid_amount) ? $this->card_paid_amount : 0;
+        $biller->credit_amount = ($this->credit_amount) ? $this->credit_amount : 0;
+        $biller->loyality_paid_amount = ($this->loyality_amount) ? $this->loyality_amount : 0;
+        $biller->discount = ($this->new_discount) ? $this->new_discount : 0;
+        $biller->auth_id = Auth::user()->id;
+        $biller->save();
+
+        #bill_id
+
+        $biller_data = FinalBillModel::where('invoice_number', '=', $this->invoice_number)->first();
+
+        #update and swap details
+        $this->fetchData();
+        foreach ($this->bill_item as $row) {
+            $bill = new FinalBillItemModel();
+            $bill->bill_id = $biller_data->id;
+            $bill->quantity = $row->quantity;
+            $bill->amount = $row->amount;
+            $bill->discount = $row->discount;
+            $bill->invoice_items_id = $row->invoice_items_id;
+            $bill->save();
+
+            $tem = TemOrderModel::find($row->id);
+            $tem->delete();
+        }
+
+        if ($x == 1) {
+            $this->printDataFetch();
+            $this->dispatchBrowserEvent('do-print');
+        }
+
+        $this->closeModel();
+    }
+
+    public function clearbill()
+    {
+        # code...
+        $this->invoice_number=null;
+        // $this->item_total=null;
+        $this->bill_item=null;
+        $this->print_bill=null;
+        $this->print_bill_information=[];
+        $this->new_customer_id=null;
+        $this->paid_amount=null;
+        $this->card_paid_amount=null;
+        $this->loyality_amount=null;
+        $this->credit_amount=null;
+        $this->card_ref_number=null;
+        $this->customer_data=null;
+        $this->customer_search=null;
+
+    }
+
+    public function findBalance()
+    {
+        # code...
+        if ($this->paid_amount) {
+            $this->balance_amount = $this->paid_amount - $this->item_total;
+        } else {
+            $this->balance_amount = 0;
+        }
+    }
+
+    public function cardPaymentAction()
+    {
+        # code...
+        if ($this->paid_amount) {
+            $this->card_paid_amount = $this->item_total - $this->paid_amount;
+        } else {
+            $this->card_paid_amount = $this->item_total;
+        }
+    }
+
+    public function creditAction()
+    {
+        # code...
+        if ($this->paid_amount) {
+            $this->credit_amount = $this->item_total - $this->paid_amount;
+        } else {
+            $this->credit_amount = $this->item_total;
+        }
+    }
 
     public function textPrint()
     {
-        // $profile = CapabilityProfile::load("SP2000");
-        // $connector = new WindowsPrintConnector("POS-80-Series");
-        // $printer = new Printer($connector, $profile);
-        // // return dd($printer);
-        // $printer->text("Hello World!\n",);
-        // $printer->text("Hello World!\n");
-        // $printer->text("Hello World!\n");
-        // $printer->text("Hello World!\n");
-        // $printer->cut();
-        // $printer->close();
-        // return dd("text click");
-
         $this->dispatchBrowserEvent('do-print');
+    }
+    public function mount()
+    {
+        # code...
+        $this->payment_option = "Cash";
     }
 
 
@@ -109,6 +250,7 @@ class Sale extends Component
     {
         # code...
         $this->searchKey = "";
+        $this->clearbill();
         $this->dispatchBrowserEvent('change-focus-other-field');
     }
 
@@ -145,6 +287,10 @@ class Sale extends Component
             $item_total =  $item_total + ($row->quantity * $row->amount);
         }
         $this->item_total = $item_total;
+        // if ($this->payment_option == "Cash" || $this->payment_option == "Card") {
+        //     $this->paid_amount = $this->item_total;
+        // }
+
 
         #if search active
         if ($this->searchKey) {

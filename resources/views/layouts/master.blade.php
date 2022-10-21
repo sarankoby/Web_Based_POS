@@ -302,16 +302,16 @@
                                     <a href="/sale" class="nav-link"><span>Sales</span></a>
                                 </li>
 
-                                <li class="dropdown @stack('shop', '')">
+                                {{-- <li class="dropdown @stack('shop', '')">
                                     <a href="#" class="nav-link"><span>Return</span></a>
-                                </li>
+                                </li> --}}
 
                             </ul>
                         </li>
 
 
 
-                        <li class="menu-header">Accounts</li>
+                        {{-- <li class="menu-header">Accounts</li>
 
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i
@@ -322,7 +322,7 @@
                                 <li><a class="nav-link" href="#">Expence</a></li>
                                 <li><a class="nav-link" href="#">Cheque</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
 
 
 
@@ -330,7 +330,7 @@
                         {{-- <li><a class="nav-link" @stack('sale') href="/sale">dadsa</a></li> --}}
 
 
-                        <li class="dropdown">
+                        {{-- <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 class="fas fa-file-invoice"></i><span>Reports</span></a>
                             <ul class="dropdown-menu">
@@ -338,11 +338,11 @@
                                 <li><a class="nav-link" href="/#">Report 2</a></li>
                                 <li><a class="nav-link" href="/#">Report 3</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         {{-- admin --}}
                       
-                                <li class="menu-header">ADMINSTRITION</li>
+                                <li class="menu-header">ADMINISTRATION</li>
                                 @if (in_array('access-model', $access) || in_array('user-type', $access) || in_array('users', $access))
 
                             <li class="dropdown @stack('access-model', '') @stack('user-type', '') @stack('users', '')">

@@ -177,7 +177,7 @@
 
                         <div class="col-md-6 col-lg-6 col-sm-12">
                             <div class="form-group">
-                                <label>Conform-Password</label>
+                                <label>Confirm-Password</label>
                                 <input type="Password" class="form-control" required=""
                                     wire:model="new_confirm_password">
                                 @error('new_confirm_password')
